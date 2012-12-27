@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ -e ../lib/comm.jar ] ; then
+  cd ..
+  if [ -e classes ] ; then
+    rm -fr classes
+  fi
+  mkdir classes
+  cd source/x10
+  echo Building package x10
+  javac -classpath .:..:../../classes:../../lib/comm.jar -d ../../classes *.java
+  cd net
+  echo Building package x10.net
+  javac -classpath .:..:../../../classes:../../../lib/comm.jar -d ../../../classes *.java
+  cd ../awt
+  echo Building package x10.awt
+  javac -classpath .:..:../../../classes:../../../lib/comm.jar -d ../../../classes *.java
+  cd ../util
+  echo Building package x10.util
+  javac -classpath .:..:../../../classes:../../../lib/comm.jar -d ../../../classes *.java
+  cd ../../../classes
+  jar cfM ../lib/x10.jar .
+  cd ..
+  rm -fr classes
+  cd bin
+else
+  echo Can't locate comm.jar
+fi
+
+echo Done. 
