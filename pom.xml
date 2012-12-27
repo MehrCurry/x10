@@ -45,11 +45,11 @@
                 <skip>false</skip>
              <includes>
                    <!-- Include unit tests within integration-test phase. -->
-                <include>**/*Tests.java</include>
+                <include>**/*Test.java</include>
              </includes>
              <excludes>
                <!-- Exclude integration tests within (unit) test phase. -->
-                <exclude>**/*IntegrationTests.java</exclude>
+                <exclude>**/*IntegrationTest.java</exclude>
             </excludes>
           </configuration>
        </execution>
@@ -64,7 +64,7 @@
              <skip>false</skip>
              <includes>
                <!-- Include integration tests within integration-test phase. -->
-               <include>**/*IntegrationTests.java</include>
+               <include>**/*IntegrationTest.java</include>
              </includes>
           </configuration>
        </execution>
