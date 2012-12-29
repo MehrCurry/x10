@@ -34,7 +34,7 @@ public class CM11ASerialControllerIntegrationTest {
 	 */
 	public static HashSet<CommPortIdentifier> getAvailableSerialPorts() {
 		HashSet<CommPortIdentifier> h = new HashSet<CommPortIdentifier>();
-		Enumeration thePorts = CommPortIdentifier.getPortIdentifiers();
+		Enumeration<?> thePorts = CommPortIdentifier.getPortIdentifiers();
 		while (thePorts.hasMoreElements()) {
 			CommPortIdentifier com = (CommPortIdentifier) thePorts
 					.nextElement();
