@@ -3,6 +3,7 @@ package x10.osgi;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import x10.CM11ASerialController;
 import x10.CM17ASerialController;
 import x10.Controller;
+import x10.MockController;
 import x10.net.SocketController;
 
 public class Activator implements BundleActivator, ManagedServiceFactory {
@@ -23,7 +25,7 @@ public class Activator implements BundleActivator, ManagedServiceFactory {
 			.getLogger(Activator.class);
 	private BundleContext ctx;
 	private ServiceRegistration<ManagedServiceFactory> myReg;
-	private HashMap<String, ServiceRegistration<Controller>> services;
+	private Map<String, ServiceRegistration<Controller>> services=new HashMap<String, ServiceRegistration<Controller>>();
 
 	@Override
 	public String getName() {
@@ -47,6 +49,8 @@ public class Activator implements BundleActivator, ManagedServiceFactory {
 				} else if ("socket".equalsIgnoreCase(module)) {
 					String[] parts=port.split(":");
 					c=new SocketController(parts[0], Integer.parseInt(parts[1]));
+				} else if ("mock".equalsIgnoreCase(module)) {
+					c=new MockController();
 				} else {
 					throw new UnsupportedOperationException("Unknown controller type: " + module);
 				}
@@ -83,8 +87,6 @@ public class Activator implements BundleActivator, ManagedServiceFactory {
 		myReg = context.registerService(ManagedServiceFactory.class, this,
 				properties);
 		System.out.println("registered as ManagedServiceFactory");
-		services = new HashMap<String, ServiceRegistration<Controller>>();
-
 	}
 
 	@Override
