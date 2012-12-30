@@ -21,6 +21,7 @@ import x10.MockController;
 import x10.net.SocketController;
 
 public class Activator implements BundleActivator, ManagedServiceFactory {
+	private static final String PID = "x10.controller";
 	private static final Logger logger = LoggerFactory
 			.getLogger(Activator.class);
 	private BundleContext ctx;
@@ -57,6 +58,7 @@ public class Activator implements BundleActivator, ManagedServiceFactory {
 
 				services.put(pid, ctx.registerService(Controller.class,
 						c, properties));
+				logger.debug("New controller has been registered: " + c);
 			} catch (UnsatisfiedLinkError e) {
 				String libraryPath = System.getProperty("java.library.path");
 				logger.error("Please copy rxtx native libraries (.dll/.so) to " + libraryPath, e);
@@ -83,10 +85,10 @@ public class Activator implements BundleActivator, ManagedServiceFactory {
 		logger.debug("starting factory...");
 		this.ctx = context;
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(Constants.SERVICE_PID, "x10.servicefactory");
+		properties.put(Constants.SERVICE_PID, PID);
 		myReg = context.registerService(ManagedServiceFactory.class, this,
 				properties);
-		System.out.println("registered as ManagedServiceFactory");
+		logger.debug("registered as ManagedServiceFactory " + PID);
 	}
 
 	@Override
