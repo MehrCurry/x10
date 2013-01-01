@@ -54,4 +54,7 @@ public class MockController implements Controller {
 	public void addCommand(Command command) {
 		logger.debug("addCommand(" + command + ")");
 	}
+
+	public void disconnect() {
+	}
 }

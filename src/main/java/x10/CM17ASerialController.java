@@ -313,4 +313,7 @@ public class CM17ASerialController implements Runnable, Controller {
 		} catch (InterruptedException ie) {
 		}
 	}
+
+	public void disconnect() {
+	}
 }
