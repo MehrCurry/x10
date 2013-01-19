@@ -1,3 +1,0 @@
-#!/bin/bash
-
-javac -classpath ../../lib/x10.jar:. *.java

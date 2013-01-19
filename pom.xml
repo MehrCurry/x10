@@ -2,16 +2,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>x10</groupId>
-	<artifactId>x10</artifactId>
-	<name>X10 Java Library</name>
+	<artifactId>x10-parent</artifactId>
+	<name>X10 Java Parent POM</name>
 	<version>1.4.0-SNAPSHOT</version>
-	<packaging>bundle</packaging>
+	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<osgi.version>4.3.1</osgi.version>
 		<slf4j.version>1.6.0</slf4j.version>
 		<rxtx.version>2.1.7</rxtx.version>
 	</properties>
+	<modules>
+		<module>x10</module>
+		<module>server</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -74,6 +78,24 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+						<outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<plugin>
 				<!-- Separates the unit tests from the integration tests. -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -121,6 +143,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
+
+
 </project>
