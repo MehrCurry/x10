@@ -169,4 +169,8 @@ public class SocketController implements Runnable, Controller
         }
         dispatcher.kill();
     }
+
+
+	public void disconnect() {
+	}
 }

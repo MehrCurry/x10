@@ -22,6 +22,8 @@ package x10;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -128,9 +130,17 @@ public class CM11ASerialController implements Runnable, Controller {
 					throw new RuntimeException("open failed on " + comport);
 				if (commPort instanceof SerialPort) {
 					sp = (SerialPort) commPort;
-					sp.setSerialPortParams(57600, SerialPort.DATABITS_8,
+					sp.setSerialPortParams(4800, SerialPort.DATABITS_8,
 							SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
+					sp.notifyOnRingIndicator(true);
+					sp.addEventListener(new SerialPortEventListener() {
+						
+						@Override
+						public void serialEvent(SerialPortEvent event) {
+							logger.debug("Serial event received: " + event);
+						}
+					});
+					
 					fromX10 = new DataInputStream(sp.getInputStream());
 					toX10 = new DataOutputStream(sp.getOutputStream());
 					queue = new ThreadSafeQueue();
@@ -143,7 +153,7 @@ public class CM11ASerialController implements Runnable, Controller {
 			logger.error("Error creating serial port connection: ", e);
 		}
 	}
-
+	
 	/**
 	 * addUnitListener registers the UnitListener for events.
 	 * 
