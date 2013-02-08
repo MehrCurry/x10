@@ -105,7 +105,7 @@ class ControllerWrap {
 			} else if ("firecracker".equals(module) || "cm17a".equals(module)) {
 				controller = new CM17ASerialController(port);
 			} else if ("socket".equals(module)) {
-				String[] parts = module.split(":");
+				String[] parts = port.split(":");
 				if (parts.length == 2) {
 					String host = parts[0];
 					int netPort = Integer.parseInt(parts[1]);
